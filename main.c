@@ -1,16 +1,41 @@
-/******************************************************************************
-
-                            Online C Compiler.
-                Code, Compile, Run and Debug C program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdlib.h>
+#include <string.h>
+/*int Saisir(){
+    int entier;
+    printf("saisir entier : ");
 
-static int k = 1;
+    scanf("%d",&entier);
+    return entier;
+
+}
+
+typedef struct produit{
+    int ref;
+    char *nom;
+}produit;
+
+void Saisir2(produit *prod){
+    printf("Entrez la ref produit : ");
+    scanf("%d", &(prod->ref));
+    printf("Entrez le nom du produit: ");
+    char buffer[30];
+    scanf("%s", buffer);
+
+    prod->nom = (char*) malloc((strlen(buffer)+1)*sizeof(char));
+
+    strcpy(prod->nom, buffer);
+
+}
+
+void affiche (produit prod){
+    printf("\n la reference est de %d", prod.ref);
+    printf("\n le nom du produit est %s", prod.nom);
+}
+*/
+
+
+
 
 typedef struct noeud
 {
@@ -19,8 +44,8 @@ typedef struct noeud
 } noeud;
 
 void
-creer (noeud * racine, int k)
-{
+creer (noeud * racine){
+  static int k = 1;
   noeud *nouv;
   nouv=(noeud*)malloc(sizeof(noeud));
   nouv->num = k;
@@ -28,12 +53,9 @@ creer (noeud * racine, int k)
 
   nouv->filsG = NULL;
   nouv->filsD = NULL;
-  
- 
-  
 
   int choix;
-  printf ("0 ou 1 droite ou gauche : ");
+  printf ("1 ou 0 - droite ou gauche : ");
   fflush(stdout);
   scanf ("%d", &choix);
   if (choix == 0)
@@ -43,12 +65,12 @@ creer (noeud * racine, int k)
     }
   if(choix==1)
     {
-      
+
       racine->filsG = NULL;
       racine->filsD = nouv;
     }
-    
-    
+
+
 
 }
 
@@ -57,10 +79,12 @@ prefixe (noeud * racine)
 {
   if (&(racine->num) != NULL)
     {
+
         prefixe(racine->filsG);
         printf(" %d ", racine->num);
+
         prefixe(racine->filsD);
-        
+
 
     }
 }
@@ -75,7 +99,10 @@ main ()
   pere.filsD = NULL;
   pere.filsG = NULL;
 
-  creer(&pere, k);
+  creer(&pere);
+  printf("creation du fils \n");
+  creer(pere.filsG);
+
 
   prefixe (&pere);
 
